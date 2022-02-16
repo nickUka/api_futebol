@@ -12,7 +12,8 @@ router.post("/times/novoTime", (req, res) => {
         titles,
         folhaPagamento,
     } = req.body;
-    if (nome && cidade && estado && titles && titles.estadual && titles.nacional && titles.internacional && folhaPagamento != undefined){
+
+    if (nome != undefined&& cidade!= undefined && estado!= undefined && titles.estadual!= undefined && titles.nacional != undefined&& titles.internacional!= undefined && folhaPagamento != undefined){
         const id = DB.times.length + 1;
         DB.times.push({
             id,
