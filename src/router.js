@@ -9,7 +9,7 @@ router.post("/times/novoTime", (req, res) => {
         cidade,
         estado,
         serie, 
-        titles: { estadual, nacional, internacional },
+        titles,
         folhaPagamento,
     } = req.body;
     if (nome && cidade && estado && titles.estadual && titles.nacional && titles.internacional && folhaPagamento != undefined){
@@ -20,19 +20,19 @@ router.post("/times/novoTime", (req, res) => {
             cidade,
             estado,
             serie,
-            titles: { estadual, nacional, internacional },
+            titles,
             folhaPagamento,
         });
-        res.status(200).json({ msg: "Time adicionado com sucesso."});
+        return res.status(200).json({ msg: "Time adicionado com sucesso."});
     } else {
-        res.status(400).json({ msg: "Faltam informações" });
+       return res.status(400).json({ msg: "Faltam informações" });
     }
 });
 
 
 //Listagem de todos os times cadastrados
 router.get("/times", (req, res) => {
-    res.json(DB.times);
+   return res.json(DB.times);
 });
 
 //Pesquisa de time por nome
@@ -40,9 +40,9 @@ router.get("/times/:nome", (req, res) => {
     const nome = req.params.nome;
     const time = DB.times.find((c) => c.nome == nome);
     if (time != undefined){
-        res.status(200).json(time);
+       return res.status(200).json(time);
     } else {
-           res.status(404).json({ msg: "Time não existe." });
+        return res.status(404).json({ msg: "Time não existe." });
     }
 });
 

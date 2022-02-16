@@ -13,6 +13,19 @@ var DB = {
             },
             folhaPagamento: 100000
         },
+        {
+            id: 2,
+            nome: "Athletico",
+            cidade: "Curitiba",
+            estado: "Paraná",
+            serie: "A",
+            titles: {
+                estadual: 100,
+                nacional: 400,
+                internacional: 120
+            },
+            folhaPagamento: 2000000
+        },
     ],
 };
 
