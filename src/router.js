@@ -64,6 +64,20 @@ router.put("/times/:id", (req, res) => {
     }
 });
 
+router.delete("/times/:id", (req, res) => {
+    if(isNaN(parseInt(req.params.id))){
+        return res.sendStatus(400);
+    } else{
+        const id = parseInt(req.params.id);
+        const index = DB.times.findIndex(time => time.id == id);
+        if (index == -1)
+            return res.sendStatus(404).json({msg: 'Time não existe.'});
+        else{
+            DB.times.splice(index, 1);
+            return res.sendStatus(200).json({msg: 'Time Excluído.'});
+        }
+    }
+ });
 
 //Listagem de todos os times cadastrados
 router.get("/times", (req, res) => {
