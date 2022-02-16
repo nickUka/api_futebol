@@ -12,7 +12,7 @@ router.post("/times/novoTime", (req, res) => {
         titles,
         folhaPagamento,
     } = req.body;
-    if (nome && cidade && estado && titles.estadual && titles.nacional && titles.internacional && folhaPagamento != undefined){
+    if (nome && cidade && estado && titles && titles.estadual && titles.nacional && titles.internacional && folhaPagamento != undefined){
         const id = DB.times.length + 1;
         DB.times.push({
             id,
@@ -26,6 +26,40 @@ router.post("/times/novoTime", (req, res) => {
         return res.status(200).json({ msg: "Time adicionado com sucesso."});
     } else {
        return res.status(400).json({ msg: "Faltam informações" });
+    }
+});
+
+router.put("/times/:id", (req, res) => {
+    if(isNaN(parseInt(req.params.id))){
+        return res.sendStatus(400);
+    } else{
+        const id = parseInt(req.params.id);
+        const time = DB.times.find((time) => time.id == id);
+        if (time != undefined){
+            const {
+                nome,
+                cidade,
+                estado,
+                serie, 
+                titles,
+                folhaPagamento,
+            } = req.body;
+
+            time.nome = nome ?? time.nome;
+            time.cidade = cidade ?? time.cidade;
+            time.estado = estado ?? time.estado;
+            time.serie = serie ?? time.serie;
+            if(titles != undefined){
+                time.titles.estadual = titles.estadual ?? time.titles.estadual;
+                time.titles.nacional = titles.nacional ?? time.titles.nacional;
+                time.titles.internacional = titles.internacional ?? time.titles.internacional;
+            }
+            time.folhaPagamento = folhaPagamento ?? time.folhaPagamento;
+
+           return res.status(200).json({time: time, msg: 'Time editado.'});
+        } else {
+            return res.status(404).json({ msg: "Time não existe." });
+        }
     }
 });
 
